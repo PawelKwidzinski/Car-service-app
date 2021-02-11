@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Service</title>
+    <div th:replace="fragments :: headerlinks" th:remove="tag"></div>
+</head>
+<body>
+
+<header th:replace="fragments :: navigator"></header>
+
+<div class="container">
+        <div class="row col-md-12 form-container">
+                <div class="row col-md-12">
+                    <h1>Add new car</h1>
+                </div>
+
+                    <form th:action="@{/cars/add}" method="post" th:object="${car_to_fill}" class="col-md-12">
+                        <input type="hidden" th:field="*{id}" th:value="*{id}">
+                        <div class="row col-md-12 form-row-container">
+                            <div class="col-md-6">
+                                <label for="brand">Brand:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></p>
+                                <input type="text" id="brand" th:field="*{brand}" th:value="*{brand}" class="form-control col-md-12">
+                            </div>
+                        </div>
+                        <div class="row col-md-12 form-row-container">
+                            <div class="col-md-6">
+                                <label for="model">Model:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-danger" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></p>
+                                <input type="text" id="model" th:field="*{model}" th:value="*{model}" class="form-control col-md-12">
+                            </div>
+                        </div>
+                        <div class="row col-md-12 form-row-container">
+                            <div class="col-md-6">
+                                <label for="colorAdd">Color:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <select th:field="*{carColor}" id="colorAdd" class="form-control col-md-12">
+                                    <option th:each="col : ${colorsToAdd}"
+                                            th:value="${col}"
+                                            th:text="${col}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 form-row-container">
+                            <div class="col-md-6">
+                                <label for="production">Production:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="date" id="production" th:field="*{production}" th:value="*{production}" class="form-control col-md-12">
+                            </div>
+                        </div>
+                        <div class="row col-md-12 form-row-buttons">
+                            <div class="col-md-6">
+                                <button type="reset" class="btn btn-warning col-md-6">Reset</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary col-md-6">Send</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+            </div>
+        </div>
+
+    <div th:replace="fragments :: footerscripts"></div>
+</body>
+</html>

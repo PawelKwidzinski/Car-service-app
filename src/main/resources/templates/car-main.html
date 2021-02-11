@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Service</title>
+    <div th:replace="fragments :: headerlinks" th:remove="tag"></div>
+</head>
+<body>
+
+<header th:replace="fragments :: navigator"></header>
+
+<div class="container">
+        <div class="row col-md-12 list-container">
+                <div class="row col-md-12">
+                    <h1>Car list</h1>
+                </div>
+                <div class="row col-md-12 list-header-row">
+                    <div class="col-md-1">Id</div>
+                    <div class="col-md-2">Brand</div>
+                    <div class="col-md-2">Model</div>
+                    <div class="col-md-2">Color</div>
+                    <div class="col-md-2">Production</div>
+                    <div class="col-sm-3"></div>
+                </div>
+                <div class="row col-md-12 list-row" th:each="car : ${allCars}">
+                    <div class="col-md-1" th:text="${car.getId()}"></div>
+                    <div class="col-md-2" th:text="${car.getBrand()}"></div>
+                    <div class="col-md-2" th:text="${car.getModel()}"></div>
+                    <div class="col-md-2" th:text="${car.getCarColor()}"></div>
+                    <div class="col-md-2" th:text="${car.getProduction()}"></div>
+                    <div class="row col-sm-3">
+                        <div class="col-sm-6">
+                            <a th:href="@{'/cars/edit/' + ${car.getId()}}" class="col-sm-12">
+                                <button type="button" class="btn btn-primary col-sm-12">Edit</button>
+                            </a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a th:href="@{'/cars/delete/' + ${car.getId()}}" class="col-sm-12">
+                                <button type="button" class="btn btn-danger col-sm-12">Delete</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div th:replace="fragments :: footerscripts"></div>
+</body>
+</html>
