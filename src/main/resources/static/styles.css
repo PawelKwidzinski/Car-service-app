@@ -1,0 +1,46 @@
+.list-container {
+    text-align: center;
+    margin: 30px auto 15px;
+    color: black;
+    border: solid 1px #5a5a5a;
+    border-radius: 5px;
+    background-color: lightgrey;
+    /*opacity: 0.97;*/
+}
+
+.list-header-row {
+    border-radius: 5px;
+    font: bold 1.3rem Arial;
+    background-color: white;
+    border: solid 1px #5a5a5a;
+    margin: 1px;
+    padding: 2px 0 2px 0;
+}
+
+.list-row {
+    margin: 1px;
+    padding: 2px 0 2px 0;
+}
+
+.form-container {
+    background-color: lightgrey;
+    text-align: center;
+    margin: 30px auto 15px;
+    color: black;
+    border: solid 1px #5a5a5a;
+    border-radius: 5px;
+}
+
+.form-row-container {
+    border-radius: 5px;
+    font: bold 1.3rem Arial;
+    background-color: #e5dda8;
+    border: solid 1px #5a5a5a;
+    margin: 5px 0;
+    padding: 2px 0 2px 0;
+}
+
+.form-row-buttons {
+    position: center;
+    margin: 5px 0;
+}
