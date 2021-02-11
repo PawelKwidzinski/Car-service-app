@@ -30,19 +30,19 @@ public class DbConfig {
         return new JdbcTemplate(dataSource);
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void init() {
-//        final String sqlDropTable = "DROP TABLE IF EXISTS cars";
-//        getJdbcTemplate().update(sqlDropTable);
-//
-//        final String sqlCreateTable = "create TABLE cars(car_id int AUTO_INCREMENT not null, brand varchar(255)," +
-//                "model varchar(255), color varchar (25), production_date varchar(25), PRIMARY KEY (car_id))";
-//        getJdbcTemplate().update(sqlCreateTable);
-//
-//        final String sqlInsertCars = "INSERT INTO cars (car_id, brand, model, color, production_date) VALUES (?, ?, ?, ?, ?)";
-//        initCarsDB().forEach(car -> getJdbcTemplate().update(sqlInsertCars, car.getId(), car.getBrand(), car.getModel(),
-//                car.getColor().toString(), Date.valueOf(car.getProductionDate())));
-//    }
+    @EventListener(ApplicationReadyEvent.class)
+    public void init() {
+        final String sqlDropTable = "DROP TABLE IF EXISTS cars";
+        getJdbcTemplate().update(sqlDropTable);
+
+        final String sqlCreateTable = "create TABLE cars(car_id int AUTO_INCREMENT not null, brand varchar(255)," +
+                "model varchar(255), color varchar (25), production date, PRIMARY KEY (car_id))";
+        getJdbcTemplate().update(sqlCreateTable);
+
+        final String sqlInsertCars = "INSERT INTO cars (car_id, brand, model, color, production) VALUES (?, ?, ?, ?, ?)";
+        initCarsDB().forEach(car -> getJdbcTemplate().update(sqlInsertCars, car.getId(), car.getBrand(), car.getModel(),
+                car.getCarColor().toString(), car.getProduction()));
+    }
 
     private List<Car> initCarsDB(){
         List<Car> carsDB = new ArrayList<>();

@@ -20,9 +20,9 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public void saveCar(final Car toSave) {
-        String sql = "INSERT INTO cars (brand, model, color, production_date) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, toSave.getBrand(), toSave.getModel(), toSave.getColor().toString(),
-                toSave.getProductionDate());
+        String sql = "INSERT INTO cars (brand, model, color, production) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, toSave.getBrand(), toSave.getModel(), toSave.getCarColor().toString(),
+                toSave.getProduction());
     }
 
     @Override
@@ -46,10 +46,10 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public void updateCar(final Car toUpdate) {
-        String sql = "UPDATE cars SET cars.brand = ?, cars.model = ?, cars.color = ?, cars.production_date = ? " +
+        String sql = "UPDATE cars SET cars.brand = ?, cars.model = ?, cars.color = ?, cars.production = ? " +
                 "WHERE car_id = ?";
-        jdbcTemplate.update(sql, toUpdate.getBrand(), toUpdate.getModel(), toUpdate.getColor().toString(),
-                Date.valueOf(toUpdate.getProductionDate()), toUpdate.getId());
+        jdbcTemplate.update(sql, toUpdate.getBrand(), toUpdate.getModel(), toUpdate.getCarColor().toString(),
+                toUpdate.getProduction(), toUpdate.getId());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public List<Car> findByDate(final LocalDate from, final LocalDate to) {
-        String sql = "SELECT * FROM cars WHERE production_date > ? AND production_date < ?";
+        String sql = "SELECT * FROM cars WHERE production > ? AND production < ?";
         final List<Map<String, Object>> datesFromDB = jdbcTemplate.queryForList(sql, from.toString(), to.toString());
         return dbToPojoMapper(datesFromDB);
     }
@@ -76,13 +76,24 @@ public class CarDaoImpl implements CarDao {
     private List<Car> dbToPojoMapper(List<Map<String, Object>> dataFromDB) {
         List<Car> carList = new ArrayList<>();
 
-        dataFromDB.forEach(element -> carList.add(new Car(
-                Long.parseLong(String.valueOf(element.get("car_id"))),
-                String.valueOf(element.get("brand")),
-                String.valueOf(element.get("model")),
-                Color.valueOf(String.valueOf(element.get("color"))),
-                LocalDate.parse(String.valueOf(element.get("production_date")))
-        )));
+        dataFromDB.forEach(element -> {
+            Car car = new Car();
+            car.setId(Long.parseLong(String.valueOf(element.get("car_id"))));
+            car.setBrand(String.valueOf(element.get("brand")));
+            car.setModel(String.valueOf(element.get("model")));
+            car.setCarColor(Color.valueOf(String.valueOf(element.get("color"))));
+            car.setProduction(Date.valueOf(String.valueOf(element.get("production"))).toLocalDate());
+
+            carList.add(car);
+        });
+//        dataFromDB.forEach(element -> carList.add(
+//                new Car(
+//                Long.parseLong(String.valueOf(element.get("car_id"))),
+//                String.valueOf(element.get("brand")),
+//                String.valueOf(element.get("model")),
+//                Color.valueOf(String.valueOf(element.get("color"))),
+//                LocalDate.parse(String.valueOf(element.get("production")))
+//        )));
         return carList;
     }
 }
