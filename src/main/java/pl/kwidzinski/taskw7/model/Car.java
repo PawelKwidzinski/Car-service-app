@@ -2,29 +2,33 @@ package pl.kwidzinski.taskw7.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class Car {
     private Long id;
+    @NotEmpty(message = "Brand cannot be empty")
     private String brand;
+    @NotEmpty(message = "Model cannot be empty")
     private String model;
-    private Color color;
+    private Color carColor;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate productionDate;
+    private LocalDate production;
 
-    public Car(final Long id, final String brand, final String model, final Color color, final LocalDate productionDate) {
+    public Car(final Long id, final String brand, final String model, final Color carColor, final LocalDate production) {
         this.id = id;
         this.brand = brand;
         this.model = model;
-        this.color = color;
-        this.productionDate = productionDate;
+        this.carColor = carColor;
+        this.production = production;
     }
 
-    public Car(final String brand, final String model, final Color color, final LocalDate productionDate) {
+    public Car(final String brand, final String model, final Color carColor, final LocalDate production) {
         this.brand = brand;
         this.model = model;
-        this.color = color;
-        this.productionDate = productionDate;
+        this.carColor = carColor;
+        this.production = production;
     }
 
     public Car() {
@@ -42,8 +46,8 @@ public class Car {
         return model;
     }
 
-    public Color getColor() {
-        return color;
+    public Color getCarColor() {
+        return carColor;
     }
 
     public void setId(final Long id) {
@@ -58,22 +62,15 @@ public class Car {
         this.model = model;
     }
 
-    public void setColor(final Color color) {
-        this.color = color;
+    public void setCarColor(final Color carColor) {
+        this.carColor = carColor;
     }
 
-    public LocalDate getProductionDate() {
-        return productionDate;
+    public LocalDate getProduction() {
+        return production;
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", color=" + color +
-                ", productionDate=" + productionDate +
-                '}';
+    public void setProduction(final LocalDate production) {
+        this.production = production;
     }
 }
