@@ -5,10 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.kwidzinski.taskw7.dao.CarDao;
 import pl.kwidzinski.taskw7.model.Car;
 import pl.kwidzinski.taskw7.model.Color;
@@ -33,14 +30,17 @@ public class CarController {
     }
 
     @GetMapping("/add")
-    public String addCar(Model model) {
-        model.addAttribute("colorsToAdd", Color.values());
-        model.addAttribute("car_to_fill", new Car());
+    public String displayForm(Model model) {
+        model.addAttribute("car", new Car());
+//        model.addAttribute("colors", Color.values());
         return "car-form";
     }
 
     @PostMapping("/add")
-    public String addCar(Car newCar) {
+    public String addCar(@Validated Car newCar, BindingResult result) {
+        if (result.hasErrors()) {
+            return "car-form";
+        }
         carDao.saveCar(newCar);
         return "redirect:/cars/list";
     }
@@ -48,8 +48,8 @@ public class CarController {
     @GetMapping("/edit/{id}")
     public String editCar(@PathVariable Long id, Model model) {
         Car carToEdit = carDao.getOne(id);
-        model.addAttribute("colorsToAdd", Color.values());
-        model.addAttribute("carToEdit", carToEdit);
+        model.addAttribute("colors", Color.values());
+        model.addAttribute("car", carToEdit);
         return "edit-form";
     }
 
@@ -70,5 +70,26 @@ public class CarController {
         return "redirect:/cars/list";
     }
 
+    @GetMapping("/find")
+    public String displaySite() {
+        return "car-find";
+    }
+
+    @PostMapping("/find/color")
+    public String findByColor(@RequestParam(value = "color") String color, Model model) {
+        final List<Car> carsColor = carDao.findByColor(color);
+        model.addAttribute("allCars", carsColor);
+        return "car-main";
+    }
+
+    @PostMapping("/find/brand")
+    public String findByBrand(@RequestParam (value = "brand") String brand, Model model) {
+        final List<Car> byBrand = carDao.findByBrand(brand);
+        if (byBrand.size() == 0) {
+            model.addAttribute("notFound", brand);
+        }
+        model.addAttribute("allCars", byBrand);
+        return "car-main";
+    }
 
 }
