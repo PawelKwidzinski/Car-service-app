@@ -2,33 +2,37 @@ package pl.kwidzinski.taskw7.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class Car {
     private Long id;
+
     @NotEmpty(message = "Brand cannot be empty")
     private String brand;
+
     @NotEmpty(message = "Model cannot be empty")
     private String model;
-    private Color carColor;
+
+    @PastOrPresent(message = "Production year cannot be from future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate production;
 
-    public Car(final Long id, final String brand, final String model, final Color carColor, final LocalDate production) {
+    private Color color;
+
+    public Car(final Long id, final String brand, final String model, final LocalDate production, final Color color) {
         this.id = id;
         this.brand = brand;
         this.model = model;
-        this.carColor = carColor;
         this.production = production;
+        this.color = color;
     }
 
-    public Car(final String brand, final String model, final Color carColor, final LocalDate production) {
+    public Car(final String brand, final String model, final LocalDate production, final Color color) {
         this.brand = brand;
         this.model = model;
-        this.carColor = carColor;
         this.production = production;
+        this.color = color;
     }
 
     public Car() {
@@ -46,8 +50,8 @@ public class Car {
         return model;
     }
 
-    public Color getCarColor() {
-        return carColor;
+    public Color getColor() {
+        return color;
     }
 
     public void setId(final Long id) {
@@ -62,8 +66,8 @@ public class Car {
         this.model = model;
     }
 
-    public void setCarColor(final Color carColor) {
-        this.carColor = carColor;
+    public void setColor(final Color color) {
+        this.color = color;
     }
 
     public LocalDate getProduction() {
