@@ -20,9 +20,9 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public void saveCar(final Car toSave) {
-        String sql = "INSERT INTO cars (brand, model, color, production) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, toSave.getBrand(), toSave.getModel(), toSave.getCarColor().toString(),
-                toSave.getProduction());
+        String sql = "INSERT INTO cars (brand, model, production, color) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, toSave.getBrand(), toSave.getModel(), toSave.getProduction(),
+                toSave.getColor().toString());
     }
 
     @Override
@@ -39,17 +39,17 @@ public class CarDaoImpl implements CarDao {
                         rs.getLong(1),
                         rs.getString(2),
                         rs.getString(3),
-                        Color.valueOf(rs.getString(4)),
-                        LocalDate.parse(rs.getString(5))),
+                        LocalDate.parse(rs.getString(4)),
+                        Color.valueOf(rs.getString(5))),
                 id);
     }
 
     @Override
     public void updateCar(final Car toUpdate) {
-        String sql = "UPDATE cars SET cars.brand = ?, cars.model = ?, cars.color = ?, cars.production = ? " +
+        String sql = "UPDATE cars SET cars.brand = ?, cars.model = ?, cars.production = ?, cars.color = ? " +
                 "WHERE car_id = ?";
-        jdbcTemplate.update(sql, toUpdate.getBrand(), toUpdate.getModel(), toUpdate.getCarColor().toString(),
-                toUpdate.getProduction(), toUpdate.getId());
+        jdbcTemplate.update(sql, toUpdate.getBrand(), toUpdate.getModel(),
+                toUpdate.getProduction(), toUpdate.getColor().toString(), toUpdate.getId());
     }
 
     @Override
@@ -67,9 +67,16 @@ public class CarDaoImpl implements CarDao {
     }
 
     @Override
-    public List<Car> findByColor(final Color color) {
+    public List<Car> findByBrand(String brand) {
+        String sql = "SELECT * FROM cars WHERE brand = ?";
+        final List<Map<String, Object>> brandFromDB = jdbcTemplate.queryForList(sql, brand);
+        return dbToPojoMapper(brandFromDB);
+    }
+
+    @Override
+    public List<Car> findByColor(final String color) {
         String sql = "SELECT * FROM cars WHERE color = ?";
-        final List<Map<String, Object>> colorsFromDB = jdbcTemplate.queryForList(sql, color.toString());
+        final List<Map<String, Object>> colorsFromDB = jdbcTemplate.queryForList(sql, color);
         return dbToPojoMapper(colorsFromDB);
     }
 
@@ -81,19 +88,11 @@ public class CarDaoImpl implements CarDao {
             car.setId(Long.parseLong(String.valueOf(element.get("car_id"))));
             car.setBrand(String.valueOf(element.get("brand")));
             car.setModel(String.valueOf(element.get("model")));
-            car.setCarColor(Color.valueOf(String.valueOf(element.get("color"))));
             car.setProduction(Date.valueOf(String.valueOf(element.get("production"))).toLocalDate());
+            car.setColor(Color.valueOf(String.valueOf(element.get("color"))));
 
             carList.add(car);
         });
-//        dataFromDB.forEach(element -> carList.add(
-//                new Car(
-//                Long.parseLong(String.valueOf(element.get("car_id"))),
-//                String.valueOf(element.get("brand")),
-//                String.valueOf(element.get("model")),
-//                Color.valueOf(String.valueOf(element.get("color"))),
-//                LocalDate.parse(String.valueOf(element.get("production")))
-//        )));
         return carList;
     }
 }

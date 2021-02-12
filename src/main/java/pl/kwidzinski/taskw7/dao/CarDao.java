@@ -12,6 +12,7 @@ public interface CarDao {
     Car getOne(Long id);
     void updateCar(Car newCar);
     void deleteCar(Long id);
-    List<Car>findByColor(Color color);
+    List<Car>findByColor(String color);
+    List<Car> findByBrand(String brand);
     List<Car>findByDate(LocalDate from, LocalDate to);
 }
