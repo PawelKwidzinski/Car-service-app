@@ -14,7 +14,7 @@
                 <div class="row col-md-12">
                     <h1>Edit car</h1>
                 </div>
-                    <form th:action="@{/cars/edit}" method="post" th:object="${carToEdit}" class="col-md-12">
+                    <form th:action="@{/cars/edit}" method="post" th:object="${car}" class="col-md-12">
                         <input type="hidden" th:field="*{id}" th:value="*{id}">
                         <div class="row col-md-12 form-row-container">
                             <div class="col-md-6">
@@ -39,8 +39,8 @@
                                 <label for="colorAdd">Color:</label>
                             </div>
                             <div class="col-md-6">
-                                <select th:field="*{carColor}" id="colorAdd" class="form-control col-md-12">
-                                    <option th:each="col : ${colorsToAdd}"
+                                <select th:field="*{color}" id="colorAdd" class="form-control col-md-12">
+                                    <option th:each="col : ${colors}"
                                             th:value="${col}"
                                             th:text="${col}">
                                     </option>
