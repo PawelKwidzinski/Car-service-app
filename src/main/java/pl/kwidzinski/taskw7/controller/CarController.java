@@ -10,6 +10,8 @@ import pl.kwidzinski.taskw7.dao.CarDao;
 import pl.kwidzinski.taskw7.model.Car;
 import pl.kwidzinski.taskw7.model.Color;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -83,13 +85,31 @@ public class CarController {
     }
 
     @PostMapping("/find/brand")
-    public String findByBrand(@RequestParam (value = "brand") String brand, Model model) {
+    public String findByBrand(@RequestParam(value = "brand") String brand, Model model) {
         final List<Car> byBrand = carDao.findByBrand(brand);
         if (byBrand.size() == 0) {
-            model.addAttribute("notFound", brand);
+            model.addAttribute("notFound", "");
         }
         model.addAttribute("allCars", byBrand);
         return "car-main";
     }
 
+    @PostMapping("find/date")
+    public String findByDate(@RequestParam(value = "from") String from,
+                            @RequestParam(value = "to") String to, Model model) {
+        try {
+
+            final List<Car> byDate = carDao.findByDate(LocalDate.parse(from), LocalDate.parse(to));
+            if (byDate.size() == 0) {
+                model.addAttribute("notFoundInRange", "");
+            }
+            model.addAttribute("allCars", byDate);
+        } catch (DateTimeException ex) {
+            model.addAttribute("errorInput", "");
+            System.out.println(ex.getMessage());
+        }
+
+
+        return "car-main";
+    }
 }
