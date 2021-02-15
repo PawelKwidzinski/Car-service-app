@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Service</title>
+    <div th:replace="fragments :: headerlinks" th:remove="tag"></div>
+</head>
+<body>
+
+<header th:replace="fragments :: navigator"></header>
+
+<div class="container">
+    <div class="row col-md-10 form-container">
+        <div class="row col-md-12">
+            <h1>Find by...</h1>
+        </div>
+
+        <div class="col-md-12 find-row">
+            <form th:action="@{/cars/find/color}" method="post" class="col-md-12">
+                <div class="row col-md-12 form-row-container">
+                    <div class="col-md-3">
+                        <label for="colorFind">color:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-control col-md-12" id="colorFind" th:name="color">
+                            <option th:each="col : ${T(pl.kwidzinski.taskw7.model.Color).values()}"
+                                    th:value="${col}"
+                                    th:text="${col}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 find-button">
+                        <button type="submit" class="btn btn-primary col-md-8">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 find-row">
+            <form th:action="@{/cars/find/brand}" method="post" class="col-md-12">
+                <div class="row col-md-12 form-row-container">
+                    <div class="col-md-3">
+                        <label for="brandFind">brand:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control col-md-12" type="text" id="brandFind" placeholder="Find cars brand"
+                               th:name="brand">
+                    </div>
+                    <div class="col-md-3 find-button">
+                        <button type="submit" class="btn btn-primary col-md-8">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 find-row">
+            <form th:action="@{/cars/find/date}" method="post" class="col-md-12">
+                <div class="row col-md-12 form-row-container">
+                    <div class="col-md-3">
+                        <label>date:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control col-md-12" type="text" placeholder="From: yyyy-mm-dd"
+                               th:name="from">
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control col-md-12" type="text" placeholder="To: yyyy-mm-dd"
+                               th:name="to">
+                    </div>
+                    <div class="col-md-3 find-button">
+                        <button type="submit" class="btn btn-primary col-md-8">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments :: footerscripts"></div>
+</body>
+</html>
