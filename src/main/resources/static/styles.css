@@ -3,6 +3,7 @@ body {
     background-image: url("images/classic-car_1920.jpg");
     background-size: cover;
     height: 100vh;
+
 }
 /*FOR CENTER PLACEHOLDER*/
 ::-webkit-input-placeholder {
