@@ -98,9 +98,8 @@ public class CarController {
     public String findByDate(@RequestParam(value = "from") String from,
                             @RequestParam(value = "to") String to, Model model) {
         try {
-
             final List<Car> byDate = carDao.findByDate(LocalDate.parse(from), LocalDate.parse(to));
-            if (byDate.size() == 0) {
+            if (byDate.size() == 0 || LocalDate.parse(from).isAfter(LocalDate.parse(to))) {
                 model.addAttribute("notFoundInRange", "");
             }
             model.addAttribute("allCars", byDate);
@@ -108,8 +107,7 @@ public class CarController {
             model.addAttribute("errorInput", "");
             System.out.println(ex.getMessage());
         }
-
-
         return "car-main";
     }
 }
+
