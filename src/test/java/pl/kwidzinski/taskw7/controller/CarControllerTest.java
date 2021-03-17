@@ -162,7 +162,7 @@ class CarControllerTest {
     }
 
     @Test
-    void should_return_cars_by_brand() throws Exception {
+    void should_return_cars_by_specific_brand() throws Exception {
         //given
         List<Car> cars = prepared_data();
         String brandToSearch = "VW";
@@ -194,7 +194,7 @@ class CarControllerTest {
     }
 
     @Test
-    void should_return_cars_by_date() throws Exception {
+    void should_return_cars_by_specific_range_of_date() throws Exception {
         //given
         List<Car> cars = prepared_data();
         String from = "2018-01-01";
