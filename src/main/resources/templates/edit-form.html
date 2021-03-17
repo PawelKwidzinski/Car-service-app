@@ -9,64 +9,69 @@
 
 <header th:replace="fragments :: navigator"></header>
 
-<div class="container">
-        <div class="row col-md-12 form-container">
-                <div class="row col-md-12">
-                    <h1>Edit car</h1>
-                </div>
-                    <form th:action="@{/cars/edit}" method="post" th:object="${car}" class="col-md-12">
-                        <input type="hidden" th:field="*{id}" th:value="*{id}">
-                        <div class="row col-md-12 form-row-container">
-                            <div class="col-md-6">
-                                <label for="brand">Brand:</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></p>
-                                <input type="text" id="brand" th:field="*{brand}" th:value="*{brand}" class="form-control col-md-12">
-                            </div>
+<main role="main" class="main">
+    <div class="container">
+        <div class="row col-md-10 form-container">
+            <div class="row col-md-12">
+                <h1>Add new car</h1>
+            </div>
+            <div class="col-md-12 form-row">
+                <form th:action="@{/cars/edit}" method="post" th:object="${car}" class="col-md-12">
+                    <input class="form-control col-md-12" type="hidden" th:field="*{id}">
+
+                    <div class="row col-md-12 form-row-container">
+                        <div class="col-md-3">
+                            <label for="brand">Brand:</label>
                         </div>
-                        <div class="row col-md-12 form-row-container">
-                            <div class="col-md-6">
-                                <label for="model">Model:</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-danger" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></p>
-                                <input type="text" id="model" th:field="*{model}" th:value="*{model}" class="form-control col-md-12">
-                            </div>
+                        <div class="col-md-3">
+                            <input class="form-control col-md-12" type="text" id="brand" th:field="*{brand}">
                         </div>
-                        <div class="row col-md-12 form-row-container">
-                            <div class="col-md-6">
-                                <label for="colorAdd">Color:</label>
-                            </div>
-                            <div class="col-md-6">
-                                <select th:field="*{color}" id="colorAdd" class="form-control col-md-12">
-                                    <option th:each="col : ${colors}"
-                                            th:value="${col}"
-                                            th:text="${col}">
-                                    </option>
-                                </select>
-                            </div>
+                        <div class="col-md-3">
+                            <label for="model">Model:</label>
                         </div>
-                        <div class="row col-md-12 form-row-container">
-                            <div class="col-md-6">
-                                <label for="production">Production:</label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="date" id="production" th:field="*{production}" th:value="*{production}" class="form-control col-md-12">
-                            </div>
+                        <div class="col-md-3">
+                            <input class="form-control col-md-12" type="text" id="model" th:field="*{model}">
                         </div>
-                        <div class="row col-md-12 form-row-buttons">
-                            <div class="col-md-6">
-                                <button type="reset" class="btn btn-warning offset-3 col-md-6">Reset</button>
-                            </div>
-                            <div class="col-md-6">
-                                <button type="submit" class="btn btn-primary offset-3 col-md-6">Send</button>
-                            </div>
+                    </div>
+
+                    <div class="row col-md-12 form-row-container">
+                        <div class="col-md-3">
+                            <label for="production">Production:</label>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-md-3">
+                            <input class="form-control col-md-12" type="date" id="production" th:field="*{production}">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="colorAdd">Color:</label>
+                        </div>
+                        <div class="col-md-3">
+                            <select th:field="*{color}" id="colorAdd" class="form-control col-md-12">
+                                <option th:each="col : ${T(pl.kwidzinski.taskw7.model.Color).values()}"
+                                        th:value="${col}"
+                                        th:text="${col}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row col-md-12 form-row-buttons">
+                        <div class="col-md-6">
+                            <button type="reset" class="btn btn-warning col-md-6">Reset</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary col-md-6">Send</button>
+                        </div>
+                    </div>
+                    <p class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></p>
+                    <p class="text-danger" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></p>
+                    <p class="text-danger" th:if="${#fields.hasErrors('production')}" th:errors="*{production}"></p>
+                </form>
+            </div>
         </div>
 
-    <div th:replace="fragments :: footerscripts"></div>
+    </div>
+</main>
+
+<div th:replace="fragments :: footerscripts"></div>
 </body>
 </html>
