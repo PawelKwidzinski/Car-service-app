@@ -14,7 +14,8 @@ public class Car {
     @NotEmpty(message = "Model cannot be empty")
     private String model;
 
-    @PastOrPresent(message = "Production year cannot be from future")
+    @PastOrPresent(message = "Date cannot be from future")
+    @NotNull(message = "Date cannot be empty")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate production;
 
