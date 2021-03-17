@@ -29,8 +29,6 @@ application.properties file:
 ![alt text](https://github.com/PawelKwidzinski/Car-service-app/blob/master/print_scn/add_new_car_date_validation.jpg)
 ![alt text](https://github.com/PawelKwidzinski/Car-service-app/blob/master/print_scn/find_car_by_color.jpg)
 ![alt text](https://github.com/PawelKwidzinski/Car-service-app/blob/master/print_scn/car_list_by_yellow.jpg)
-![alt text](https://github.com/PawelKwidzinski/Car-service-app/blob/master/print_scn/find_car_by_brand.jpg)
-![alt text](https://github.com/PawelKwidzinski/Car-service-app/blob/master/print_scn/car_list_by_brand.jpg)
 ![alt text](https://github.com/PawelKwidzinski/Car-service-app/blob/master/print_scn/find_car_by_date.jpg)
 ![alt text](https://github.com/PawelKwidzinski/Car-service-app/blob/master/print_scn/car_list_by_date.jpg)
 ![alt text](https://github.com/PawelKwidzinski/Car-service-app/blob/master/print_scn/car_service_test.jpg)
