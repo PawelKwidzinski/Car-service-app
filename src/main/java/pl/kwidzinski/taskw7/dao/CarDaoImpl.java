@@ -1,5 +1,8 @@
 package pl.kwidzinski.taskw7.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import pl.kwidzinski.taskw7.model.Car;
@@ -13,16 +16,23 @@ import java.util.*;
 public class CarDaoImpl implements CarDao {
 
     private final JdbcTemplate jdbcTemplate;
+    private final Logger logger = LoggerFactory.getLogger(CarDaoImpl.class);
 
     public CarDaoImpl(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public void saveCar(final Car toSave) {
-        String sql = "INSERT INTO cars (brand, model, production, color) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, toSave.getBrand(), toSave.getModel(), toSave.getProduction(),
-                toSave.getColor().toString());
+    public int saveCar(final Car toSave) {
+        try {
+            String sql = "INSERT INTO cars (brand, model, production, color) VALUES (?, ?, ?, ?)";
+            return jdbcTemplate.update(sql, toSave.getBrand(), toSave.getModel(), toSave.getProduction(),
+                    toSave.getColor().toString());
+        } catch (DataAccessException e) {
+            logger.error("Error connection with Data Base");
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override
@@ -45,17 +55,17 @@ public class CarDaoImpl implements CarDao {
     }
 
     @Override
-    public void updateCar(final Car toUpdate) {
+    public int updateCar(final Car toUpdate) {
         String sql = "UPDATE cars SET cars.brand = ?, cars.model = ?, cars.production = ?, cars.color = ? " +
                 "WHERE car_id = ?";
-        jdbcTemplate.update(sql, toUpdate.getBrand(), toUpdate.getModel(),
+        return jdbcTemplate.update(sql, toUpdate.getBrand(), toUpdate.getModel(),
                 toUpdate.getProduction(), toUpdate.getColor().toString(), toUpdate.getId());
     }
 
     @Override
-    public void deleteCar(final Long id) {
+    public int deleteCar(final Long id) {
         String sql = "DELETE FROM cars WHERE car_id = ?";
-        jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, id);
 
     }
 
@@ -74,9 +84,9 @@ public class CarDaoImpl implements CarDao {
     }
 
     @Override
-    public List<Car> findByColor(final String color) {
+    public List<Car> findByColor(final Color color) {
         String sql = "SELECT * FROM cars WHERE color = ?";
-        final List<Map<String, Object>> colorsFromDB = jdbcTemplate.queryForList(sql, color);
+        final List<Map<String, Object>> colorsFromDB = jdbcTemplate.queryForList(sql, color.toString());
         return dbToPojoMapper(colorsFromDB);
     }
 

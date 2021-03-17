@@ -7,12 +7,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface CarDao {
-    void saveCar(Car newCar);
+    int saveCar(Car newCar);
+
     List<Car> findAll();
+
     Car getOne(Long id);
-    void updateCar(Car newCar);
-    void deleteCar(Long id);
-    List<Car>findByColor(String color);
+
+    int updateCar(Car newCar);
+
+    int deleteCar(Long id);
+
+    List<Car> findByColor(Color color);
+
     List<Car> findByBrand(String brand);
-    List<Car>findByDate(LocalDate from, LocalDate to);
+
+    List<Car> findByDate(LocalDate from, LocalDate to);
 }
