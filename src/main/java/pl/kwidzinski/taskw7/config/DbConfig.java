@@ -17,7 +17,7 @@ import java.util.List;
 @Configuration
 public class DbConfig {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     @Autowired
     public DbConfig(final DataSource dataSource) {
