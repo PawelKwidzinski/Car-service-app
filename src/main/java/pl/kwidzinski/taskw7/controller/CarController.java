@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/cars")
 public class CarController {
-    private CarDao carDao;
+    private final CarDao carDao;
 
     @Autowired
     public CarController(final CarDao carDao) {
@@ -34,7 +34,7 @@ public class CarController {
     @GetMapping("/add")
     public String displayForm(Model model) {
         model.addAttribute("car", new Car());
-//        model.addAttribute("colors", Color.values());
+        model.addAttribute("colors", Color.values());
         return "car-form";
     }
 
@@ -79,7 +79,7 @@ public class CarController {
 
     @PostMapping("/find/color")
     public String findByColor(@RequestParam(value = "color") String color, Model model) {
-        final List<Car> carsColor = carDao.findByColor(color);
+        final List<Car> carsColor = carDao.findByColor(Color.valueOf(color.toUpperCase()));
         model.addAttribute("allCars", carsColor);
         return "car-main";
     }
