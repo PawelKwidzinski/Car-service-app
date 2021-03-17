@@ -1,6 +1,6 @@
 # Car-service-app
 ## General
-API with UI in Thymeleaf. CRUD service with "Car" as a model of aplication. The MVC tests performed using Mockito and JUnit5.
+API with UI in Thymeleaf. CRUD service with "Car" as model of application. The MVC tests performed using Mockito and JUnit5.
 Features:
 * CRUD
 * Filter by color
