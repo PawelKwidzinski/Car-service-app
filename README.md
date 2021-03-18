@@ -1,6 +1,7 @@
 # Car-service-app
 ## General
 API with UI in Thymeleaf. CRUD application with "Note" as model. The unit tests performed using Mockito and JUnit5.
+
 Features:
 * CRUD
 ## Technologies
