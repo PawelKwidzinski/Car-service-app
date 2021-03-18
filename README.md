@@ -4,6 +4,9 @@ API with UI in Thymeleaf. CRUD service with "Car" as model of application. The M
 
 Features:
 * CRUD
+* Filter by color
+* Filter by brand
+* Filter from/to date
 ## Technologies
 * Java 11
 * Maven
